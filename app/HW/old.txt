@@ -1,0 +1,27 @@
+const AWS = require('aws-sdk');
+
+//console.log(AWS.config);
+
+const s3=new AWS.S3;
+
+var params ="vubz"
+
+s3.listBuckets(function(err, data) {
+  if (err) { console.log("Error:", err); }
+  else {
+    var len;
+    var params="vubz";
+
+    for (var index in data.Buckets){
+      if (data.Buckets[index].Name == params){
+        len=index;
+        break;
+      }
+    }
+
+    var bucket = data.Buckets[len];
+    console.log(bucket.Name+" bucket was created in: "+bucket.CreationDate);
+
+
+  }
+});

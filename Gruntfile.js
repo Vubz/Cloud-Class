@@ -10,24 +10,29 @@
 module.exports = function (grunt) {
 
   // Time how long tasks take. Can help when optimizing build times
-  require('time-grunt')(grunt);
 
-  // Automatically load required Grunt tasks
+  require('time-grunt')(grunt);
   require('jit-grunt')(grunt, {
     useminPrepare: 'grunt-usemin',
     ngtemplates: 'grunt-angular-templates',
     cdnify: 'grunt-google-cdn'
   });
-
+  require('grunt-exec')(grunt);
   // Configurable paths for the application
   var appConfig = {
     app: require('./bower.json').appPath || 'app',
     dist: 'dist'
   };
+  //grunt.loadNpmTasks('grunt-exec');
 
   // Define the configuration for all the tasks
   grunt.initConfig({
-
+    exec:{
+      sync:
+      {
+        cmd: 'aws s3 sync dist s3://vubz --acl public-read'
+      }
+    },
     // Project settings
     yeoman: appConfig,
 

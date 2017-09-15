@@ -41,6 +41,11 @@ angular
         controller: 'PerformancechartCtrl',
         controllerAs: 'performancechart'
       })
+      .when('/homework3', {
+        templateUrl: 'views/homework3.html',
+        controller: 'Homework3Ctrl',
+        controllerAs: 'homework3'
+      })
       .otherwise({
         redirectTo: '/'
       });

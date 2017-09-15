@@ -1,0 +1,93 @@
+<p>This is the homework3 view.</p>
+
+
+<div class="row">
+  <p>1. Ver Metadata y subir imagen a otra bucket</p>
+  <pre>
+    const AWS = require('/usr/local/lib/node_modules/aws-sdk');
+const s3 = new AWS.S3();
+
+var params = {
+ Bucket: "cc414-images",
+ Key: "scientist.png"
+};
+s3.headObject(params, function(err, data)
+{
+  if (err) console.log(err, err.stack); // an error occurred
+  else
+  {
+    if (data.Metadata.move)
+    {
+      move=data.Metadata.move;
+      if (move=='true'){
+        var params =
+        {
+         Bucket:'cc414-images/23042',
+         CopySource: 'cc414-images/scientist.png',
+         Key: 'scientist.png',
+         ACL: 'public-read',
+        };
+        s3.copyObject(params, function(err, data)
+        {
+          if (err)
+              console.log(err, err); // an error occurred
+          else {
+              console.log(data); // successful response
+          }
+        });
+      }
+      else {
+        console.log("Move is false");
+      }
+    }
+    else {
+      console.log("No Metadata move");
+    }
+  }          // successful response
+});
+  </pre>
+  <p>2. Imagen de Nasa</p>
+  <pre>
+    const request = require('request');
+    const fs = require('fs');
+
+
+    request('https://api.nasa.gov/planetary/apod?api_key=YkaIinNU67CpICRZRGLUaY2A99Cp4SDtMGHdgtwN', { json: true }, (err, res, body) => {
+      if (err) { return console.log(err); }
+      else
+      {
+        url=body.url
+        request(url).pipe(fs.createWriteStream('space.png'))
+
+      }
+      console.log(body.url);
+      console.log(body.explanation);
+    });
+
+  </pre>
+  <p>3. Google Analytics</p>
+  <img src=images/Google1.png ><br>
+  <img src=images/Google2.png ><br>
+  <p>4. Richardson Maturity Model</p>
+  <p>Richardson Maturity Model</p>
+<p>steps toward the glory of REST</p>
+<p>Este escrito es una descripción de los niveles y pasos a seguir para tener un modelo REST exitoso y llegar a su máximo exponente “Glory of REST”.</p>
+
+<p>Empezando con el nivel 0 (Swamp of POX) y siguiendo el ejemplo de Martin Flower para hacer una cita médica, se tendría un nivel muy básico de interacción, el cliente  pide la información de citas disponibles, el proveedor manda una respuesta con los espacios disponibles, luego el cliente manda otra respuesta con la cita deseada y el proveedor responde con confirmación o error.</p>
+
+<p>El nivel 1 (Resources) maneja los recursos de manera individual, la respuesta del proveedor con los espacios disponibles poseen un id único para accederse y la confirmación del proveedor es similar a la anterior pero permite al usuario acceder a su cita de manera única a través de un link con el id, Ejemplo: id=1234,  http://example/citas/1234</p>
+
+<p>En el nivel 2 (HTPP Verbs) se utilizan los verbos de https que caracterizan al REST, los más comunes POST, GET por ejemplo indican el tipo de cambio o pedido que se va a hacer al proveedor, eliminando variación innecesaria. También utiliza respuestas únicas determinadas por el proveedor, los códigos de respuesta indican el tipo de cambio que se hizo agregando profundidad. Los códigos empezando con 2XX indican un tipo de transacción exitosa, mientras que los códigos de error son únicos y dan una pista a la raíz del problema.</p>
+
+<p>En el nivel 3 (Hypermedia Controls) se agregan URI’s a las respuestas primero como parte de estandarización y segundo para el momento de tener la transacción completada y la cita médica hecha, proveen control sobre los tipos de transacciones que se pueden hacer lo que permite actualizar una parte de la transacción sin necesidad de eliminar la transacción del cliente para logarlo.</p>
+
+
+  <p>5. Por que Cloud Computing es importante</p>
+  <p>
+    Cloud Computing es importante debido al potencial que tiene, desde el punto de vista del programador le proporciona acceso a equipo y poder de procesamiento con valor de millones de dólares con solo una cuota al mes. Desde el punto económico tiene una similitud a la del internet, entre más personas lo usen, la red se vuelve más barata y más accesible, Cloud Computing nos pone a todos los mismos recursos para competir y trabajar para resolver problemas, crear ideas y generar negocios.
+  </p>
+  <p>6. Que cambiarias y porque?</p>
+  <p>Me gustaria tener las tareas por adelantado para ajustar mejor mi calendario en lugar de semana a semana </p>
+  <p>7. Tarea Extra: Por que la computadora cuantica es el fin de la criptografia?</p>
+  <p>La computadora cuántica trae consigo la implementación del algoritmo de Shor, el cual con una computadora cuántica calcula de manera más rápida la factorización de números, la seguridad actual se basa en la complejidad que es para una computadora actual factorizar, pero la computadora cuántica no cuenta con este problema. </p>
+</div>
