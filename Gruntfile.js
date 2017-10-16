@@ -17,22 +17,24 @@ module.exports = function (grunt) {
     ngtemplates: 'grunt-angular-templates',
     cdnify: 'grunt-google-cdn'
   });
-  require('grunt-exec')(grunt);
+  //require('grunt-exec')(grunt);
   // Configurable paths for the application
   var appConfig = {
     app: require('./bower.json').appPath || 'app',
     dist: 'dist'
   };
-  //grunt.loadNpmTasks('grunt-exec');
+  grunt.loadNpmTasks('grunt-exec');
 
   // Define the configuration for all the tasks
   grunt.initConfig({
+
     exec:{
       sync:
       {
         cmd: 'aws s3 sync dist s3://vubz --acl public-read'
       }
     },
+
     // Project settings
     yeoman: appConfig,
 
@@ -329,7 +331,7 @@ module.exports = function (grunt) {
         options: {
           collapseWhitespace: true,
           conservativeCollapse: true,
-          collapseBooleanAttributes: true,
+          collapseBooleanAttributes: false,
           removeCommentsFromCDATA: true
         },
         files: [{

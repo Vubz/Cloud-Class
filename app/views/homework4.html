@@ -1,0 +1,57 @@
+
+
+<p>This is the Homework 4 view.</p>
+<p>Que es un promise?</p>
+<p>Un promise es un valor que no se conoce al momento de creación, funcionan de manera asíncrona esperando que se complete el paso anterior antes de continuar</p>
+<p>Que es callback?</p>
+<p>Es una función que es pasada a otra función como parámetro, esencialmente es un patron para regresar un valor que puede ser recursivo las veces necesarias</p>
+<p>Diferencias</p>
+<p>La sintaxis es la mas importante los callbacks en funciones diferentes es naturalmente confuso, mientras que los promises utilizan una sintaxis de .then para indicar el siguiente paso, puede haber un .then().then().then()return hasta terminar</p>
+
+
+</head>
+<body>
+
+<h2>Search common comic book issues!</h2>
+
+
+<div class="Select">
+  <button ng-click="SearchChar()">
+  Search Characters
+  </button>
+</div>
+
+
+
+<ui-select ng-model="Character.selected" theme="bootstrap" ng-change="selectionChanged(Character.selected.id)">
+  <ui-select-match placeholder="Enter a Superhero Name...">
+    {{$select.selected.name}}
+  </ui-select-match>
+  <ui-select-choices repeat='e in Characters | filter: $select.search'>
+    {{e.name}}  ({{e.id}})
+  </ui-select-choices>
+</ui-select>
+
+<ui-select ng-model="Character2.selected" theme="bootstrap" ng-change="selectionChanged2(Character2.selected.id)">
+  <ui-select-match placeholder="Enter a Superhero Name...">
+    {{$select.selected.name}}
+  </ui-select-match>
+  <ui-select-choices repeat='e in Characters | filter: $select.search'>
+    {{e.name}}  ({{e.id}})
+  </ui-select-choices>
+</ui-select>
+
+<button ng-click="SearchComics()">
+Search Comics
+</button>
+
+<table ng-table="tableParams" class="table table-stripted" show-filter="true">
+    <tr ng-repeat="user in ComicMatches">
+        <td title="'Comic'" filter="{comics: 'text'}" sortable="'comics'">
+          {{user.comics}}
+            </td>
+        <td title="'Series'" filter="{id: 'number'}" sortable="'id'">
+          {{user.series}}
+            </td>
+    </tr>
+</table>

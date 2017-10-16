@@ -1,0 +1,243 @@
+<p>to be made pretty!!!!</p>
+<h1>The Five Pillars of the Well-Architected Framework</h1>
+
+<p>
+Al momento de generar soluciones si se descuidan los 5 pilares de la arquitectura de software, se puede tener una solución no durable que puede colapsar con el tiempo.
+</p>
+<p>
+<h2>Seguridad</h2>
+
+Es la habilidad de proteger la información, sistemas y bienes a través de la implementación de estrategias y manejo de riesgos.
+
+<h3>Principios:</h3>
+
+	Aplicar seguridad a todas las capas: Cada capa debe tener sus propias medidas de seguridad en lugar de los extremos.
+	Habilitar rastreabilidad: Hacer log de todos los cambios de ambiente.
+	Implementar el concepto de menor privilegio: Autorización adecuada para cada recurso.
+	Enfoque en la seguridad del ambiente:
+	Automatizar las mejores prácticas de seguridad: Mecanismos de software ayudan a una mejor escabilidad para una protección más efectiva.
+
+<h3>Definición:</h3>
+	Las mejores prácticas para el manejo de seguridad son:
+
+
+Las Mejores practicas
+<ol>
+  <li>Identidad y acceso de acceso:
+  	Estas son las bases para manejar la autentificación autorizada pos solo los usuarios con el privilegio de revisar la información que les corresponde. En Amazon Web Services esto es manejado por AWS Identity u Access Management (IAM), donde se crean pólizas para administrar recursos, grupos o recursos.
+  </li>
+  <li>Controles detectives:
+  	Esta parte se refiere más al manejar de la información generada por el sistema, la lectura de log, eventos, y monitoreo que ayuda a la auditoria, análisis automatizados y alarmas. AWS CloudTrail logs, llamadas a AWS API , y Amazon CloudWatch proveen logs y métricas para el monitoreo con alarmas.
+  </li>
+  <li>Protección de infraestructura:
+  	Esto está basado en el control de metodologías para proteger la profundidad y la autentificación de varios factores, que son necesarios para tener las mejores practias. EnAWS se puede implementar la inspección de paquetes con herramientas nativas o externas.
+  </li>
+  <li>Protección de información: Las practicas más importantes para la protección de información son:
+  <ol>
+    <li>Que los usuarios mantengan control de su información</li>
+    <li>Encriptar la información y keys</li>
+    <li>Log detallados del contenido importante</li>
+    <li>Durabilidad de la arquitectura</li>
+    <li>Versionamiento</li>
+    <li>Mantener la información en una sola región hasta que sea necesario moverla.</li>
+  </ol></li>
+  <li>Respuesta a incidentes:
+  Procesos para responder a errores, incidentes de seguridad y otros eventos que tengan un impacto en la seguridad del sistema. Logs detallados son la mejor herramienta para la prevención de estos incidentes y sus herramientas de monitoreo se pueden encontrar en AWS.
+  </li>
+</ol>
+
+
+</p>
+
+
+
+<p> <h2>Confiabilidad</h2>
+Es la habilidad del sistema para recuperarse de interrupciones de servicio, requiere de computación constante y dinámica para calcular la demanda y proveer el servicio necesario.
+
+<h3>Principios:</h3>
+<ol>
+  <li>	Exámenes de proceso de recuperación: Exámenes para asegurarse que el sistema funciona en ambientes diferentes.
+</li>
+  <li>	Recuperarse automáticamente después de un fallo: Monitoreo del sistema por indicadores clave para activar un límite.
+</li>
+  <li>	Escalabilidad horizontal para agregar disponibilidad de sistema: Remplazar un recurso grande por varios pequeños para garantizar disponibilidad.
+</li>
+  <li>	Evitar adivinar la capacidad:  Evitar saturación.
+</li>
+  <li>	Manejar cambio en automatización: Cambios automatizados.
+</li>
+</ol>
+
+
+Definición:
+<ol>
+  <li>Fundaciones</li>
+  <li>Manejo de cambios</li>
+  <li>Manejo de errores</li>
+
+</ol>
+
+<p>Fundaciones:
+Antes generar la infraestructura de cualquier sistema es necesario que haya confiabilidad como base del sistema. Con AWS la mayoría de la fundación ya se encuentra en pie, así que la pregunta es cómo manejar los servicios y pensar en la topología.
+</p>
+<p>Manejo de cambio.
+Planear a futuro con la información de tus sistema permite brindar el mejor servicio, estos cambios y variables tienen que ser monitoreados  de manera automática. Para el aumento de servidores para permitir más usuarios por ejemplo.
+</p>
+
+Manejo de fallo:
+El fallo es inevitable, el mejor interés es como responder a estar fallas y prevenir que sucedan otra vez. Además del monitoreo, respaldos de información son importantes para la respuesta, también exámenes de sistema para comprobar el funcionamiento.
+
+</p>
+
+
+
+<p><h2>Eficiencia de funcionamiento.</h2>
+La mejor manera de utilizar las tecnologías para cumplir con los requisitos.
+
+<h3>Principios</h3>
+<ol>
+  <li>Democratizar tecnologías avanzadas: Rentar nuevas tecnologías como un servicio en lugar de aprender a usarlas.
+</li>
+  <li>Irse global en minutos: Hacer el sistema fácil de implementar en múltiples regiones con pocos clicks.
+</li>
+  <li>Arquitecturas serverless: Rentar servidores elimina el mantenimiento dejando la necesidad solo de implementar.
+</li>
+  <li>Experimentar seguido: Experimentar nuevas configuraciones y compatibilidad.
+</li>
+  <li>Simpatia mecánica; Usar las tecnologías con las que te sientas comodo.
+</li>
+</ol>
+
+<h3>Definicion:</h3>
+<ol>
+  <li>Selección</li>
+  <li>Revisión</li>
+  <li>Monitoreo</li>
+  <li>Intercambios</li>
+</ol>
+
+
+<h3>Selección:</h3>
+La solución óptima para cualquier sistema particular está basado en el tipo de trabajo que se tiene. El tipo de arquitectura está basado en la optimización del sistema para brindar el trabajo deseado.
+<ol>
+  <li>Computación: la computación optima se basa en el diseño, patrones, etc, tu arquitectura debe tomar ventaja de la elasticidad que permite la arquitectura serverless.
+</li>
+  <li>Guardado: Se basa en la frecuencia que se requiere accesar la infomacion, la cantidad de cambios a la que es sometida, si es dinámica, etc. En AWS existen muchos tipos de servicios para elegir tu guardado de datos ideal.
+</li>
+  <li>Base de datos: Por lo general se elige de acuerdo a la organización en lugar de tener un aproche por datos.
+</li>
+  <li>Network: Al estar virtualizado AWS ofrece múltiples servicios para acodar la network a tus necesidades.
+</li>
+</ol>
+
+Revisión: Revisión constante a los cambios y servicios de AWS para asegurarse que se tiene los mejores recursos para el servicio.
+
+Monitoreo: Usar los servicios de AWS para monitorear los logs y otras métricas.
+
+Intercambios: Entender las altas y bajas de los recursos que se seleccionaron para brindar el servicio óptimo.
+
+
+</p>
+
+
+
+
+<p> <h2>Optimización de costos.</h2>
+El proceso de refinamiento y mejora de sistema dentro del ciclo de vida, desde pruebas de concepto, hasta pruebas, todo ayuda a crear un sistema eficiente en costos.
+<p>Principios:</p>
+<ol>
+  <li>Adoptar un modelo de consumo: Pagar solo por los recursos consumidos.</li>
+  <li>Beneficiarse por la economía de escala: Al usar cloud computing se tiene acceso a recursos más poderosos a precios más bajos.</li>
+  <li>Dejar de gastar dinero en centros de operaciones de información: AWS se encarga de la infraestructura.
+</li>
+  <li>Análisis y atribución de gastos: Diferenciar entre los recursos usados.</li>
+  <li>Uso de servicios para reducir el costo de mantenimiento: Rentar servicios elimina el mantenimiento.</li>
+</ol>
+
+
+
+Definición:
+<ol>
+  <li>Recursos económicos</li>
+  <li>Igualar oferta y demanda</li>
+  <li>Conciencia de gastos.</li>
+  <li>Optimizar con el tiempo.</li>
+</ol>
+
+Recursos económicos:
+Usar el recurso ideal es la llave para la el bajo precio, fuera de la renta de recursos existen otros medio como la subasta de espacio en AWS EC2.
+
+<p>Igualar oferta y demanda.
+Tener los recursos necesarios para cumplir con la demanda sin pagar más de los que realmente se necesitan. En AWS se puede administrar todo esto automáticamente.
+</p>
+
+<p>Conciencia de gastos.
+La automatización de AWS puede ser engañosa y hace fácil no darse cuenta de los recursos consumidos por lo que el monitoreo es necesario para comprobar gastos.
+</p>
+
+<p>Optimizar con el tiempo.
+Buscar nuevas soluciones y mejores precios.
+</p>
+
+</p>
+
+<p> <h2>Excelencia Operacional.</h2>
+Esto incluye como los cambios son ejecutados, y todas las respuestas a eventos no esperados. Todos estos cambios deben ser automatizados, documentados, probados y revisados regularmente.
+
+<h3>Principios</h3>
+<ol>
+  <li>Ejecuta operaciones con código: Automatizar</li>
+  <li>Alinea operaciones de proceso con objetivos empresariales:  Colecta métricas que demuestren el cumplimiento de los objetivos empresariales.</li>
+  <li>Haz cambios regulares, pequeños, e incrementales:  El trabajo debe estar hecho de una manera para permitir cambios a los componentes de manera regular, se conoce como modularidad.</li>
+  <li>Haz pruebas para eventos no esperados: Todo debe estar probado para encontrar las fallas y lidiar con ellas.</li>
+  <li>Aprende de eventos y fallas: Logs y documentación regular.</li>
+  <li>Mantén los procedimientos actualizados: La documentación tiene que ser actualizada con cada cambio y de manera que pueda ser entendido por cualquiera que vaya a ejecutar la operación.</li>
+</ol>
+
+<h3>Definición</h3>
+<ol>
+  <li>Preparación</li>
+  <li>Operaciones</li>
+  <li>Respuestas</li>
+
+</ol>
+
+Preparación:
+Es la idea de probar el ambiente y diversos escenarios, con AWS existen diversos métodos, servicios, y demás para garantizar pruebas. La documentación debe estar actualizada y probada para evitar errores y también para detectar.
+
+<p>Operaciones:
+Estandarizadas y manejadas de manera regular, todas las operaciones de rutina deben de ser automatizadas, las operaciones manuales deben de ser evitadas para eliminar la probabilidad de fallo, regresar a un estado pasado es más complicado después de un fallo así que  se tiene que prevenir.
+</p>
+<p>Respuestas:
+Las respuestas deben estar automatizadas y listas para responder a varios eventos.
+</p>
+
+</p>
+
+
+<h1>Como lo voy a aplicar a mi proyecto:</h1>
+<p>
+<p>En nuestro proyecto realizaremos la detección de placas vehiculares y su envió a una base de datos para publicar la información de los carros robados en una página pública.
+</p>
+
+Seguridad
+Se necesitan proteger las entradas del servidor para solo permitir mandar la información y modificar a usuarios con autorización, también aplicaremos un ID único a las raspberry pi para tener un control de las raspberrys, se entregara un token de identificación único de igual manera.
+
+</p>
+
+<p> Confiabilidad
+  Para proteger la información en caso de pérdida de conectividad se generaran logs con la info para mandar y se resumirá el funcionamiento normal una vez que regrese la conectividad.
+
+</p>
+
+<p> Eficiencia de funcionamiento
+  En mi opinion la mayoria de los recusos que vamos a usar es por nuestra confianza con ellos y nuestra inexperiencia con otros servicios y recursos, fuera de eso optimizaremos los recursos que usaremos.
+</p>
+
+<p>Optimizacion de costos
+Con nuestro primer proyecto la planeacion es instrumental para el funcionamiento, la experiencia nos dara mejores herramientas, pero ahora solo podemos investigar y optimizar con lo que tenemos
+</p>
+
+<p> Exelencia operacional
+Debemos automatizar respuestas y estar preparados para las eventualidaes de fallo y actualizaciones.
+</p>
