@@ -11,7 +11,7 @@ var apiKey_Private='3902c6b5ce286580ff0599c868ed0cc91d7956d6';
 //var url='https://gateway.marvel.com:443/v1/public/characters?name=Spider-man&apikey=3fd140cb2420a52f345ea73e77f89e24'
 
 var uri = 'https://gateway.marvel.com/v1/public/characters/{0}/comics?format={1}&formatType={2}&noVariants={3}&orderBy={4}&apikey={5}&ts={6}&hash={7}&limit={8}';
-var uri2= 'https://gateway.marvel.com:443/v1/public/characters/{0}/series?limit={1}&offset={2}&apikey={3}';
+var uri2= 'https://gateway.marvel.com:443/v1/public/characters/{0}/series?limit={1}&offset={2}&apikey={3}&ts={4}';
 
 var format = 'comic';
 var formatType = 'comic';
@@ -28,13 +28,13 @@ module.exports.get = (event, context, callback) => {
   console.log(event.data);
   console.log(event.FirstId);
   console.log(event.SecondId);
-  var firstCharacterGetComicsUrl= uri.format(event.FirstId,format,formatType,noVariants,orderBy,apikey,TS,hash,limit);
-  var secondCharacterGetComicsUrl= uri.format(event.SecondId,format,formatType,noVariants,orderBy,apikey,TS,hash,limit);
+  var firstCharacterGetComicsUrl= uri.format(event.FirstId,limit,offset,apikey,TS,);
+  var secondCharacterGetComicsUrl= uri.format(event.SecondId,limit,offset,apikey,TS);
   //console.log(firstCharacterGetComicsUrl);
 
   var params = {
   FunctionName: 'vubz-dev-MarvelCache', /* required */
-  Payload: '{"FirstId": "'+event.FirstId+'","SecondId": "'+event.SecondId+'","Type": "comics"}'
+  Payload: '{"FirstId": "'+event.FirstId+'","SecondId": "'+event.SecondId+'","Type": "series"}'
   };
   lambda.invoke(params, function(err, data) {
     if (err) {
@@ -75,7 +75,7 @@ module.exports.get = (event, context, callback) => {
 
           var params = {
           FunctionName: 'vubz-dev-SaveMarvelCache', /* required */
-          Payload: '{"FirstId": "'+event.FirstId+'","SecondId": "'+event.SecondId+'","data": "'+tempdata+'","Type": "comics"}'
+          Payload: '{"FirstId": "'+event.FirstId+'","SecondId": "'+event.SecondId+'","data": "'+tempdata+'","Type": "series"}'
           };
 
           lambda.invoke(params, function(err, data) {
@@ -117,7 +117,7 @@ var prepareSend=function (data) {
   list=(data.map(
     function (evt) {
       var temp={};
-      temp["comics"]=evt
+      temp["series"]=evt
       return temp
   }));
 
@@ -154,10 +154,10 @@ var invokeMatch= function (CharacterLists) {
   return common;
 };
 
-var invokeLamdas= function (characterid,comicCount,callback) {
+var invokeLamdas= function (characterid,seriesCount,callback) {
   //console.log(comicCount);
   var tasks=[];
-  var lamdaCount=Math.ceil(comicCount/100);
+  var lamdaCount=Math.ceil(seriesCount/100);
   //console.log(lamdaCount);
   let offset;
   for (let i=0;i<lamdaCount;i++){
@@ -167,7 +167,7 @@ var invokeLamdas= function (characterid,comicCount,callback) {
     tasks.push(function (callback) {
       offset= i*100;
       var lambdaParams ={
-        FunctionName: "vubz-dev-singleComic",
+        FunctionName: "vubz-dev-singleSeries",
         InvocationType : "RequestResponse",
         Payload : '{"characterId": "'+characterid+'","offset": "'+offset+'"}'
       };
@@ -188,15 +188,15 @@ var invokeLamdas= function (characterid,comicCount,callback) {
     })
   };
   async.parallel(tasks,function (error,data) {
-    var comics=[];
+    var series=[];
     //console.log(data.length);
 
     for (let i =0;i<data.length;i++){
       //console.log(comics.concat(data[i]));
-      comics=comics.concat(data[i]);
+      series=series.concat(data[i]);
 
     };
     //console.log(comics);
-    callback(null,comics)
+    callback(null,series)
   });
 };

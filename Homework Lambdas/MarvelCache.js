@@ -5,32 +5,65 @@ require('string_format');
 
 
 module.exports.get = (event, context, callback) => {
-  var params = {
-   Bucket: "vubz-marvel-cache",
-   Key: "{0}-{1}.txt".format(event.FirstId,event.SecondId)
-  };
-  s3.getObject(params,function (err,data) {
-    if (err){
-      var response = {
-      isBase64Encoded: false,
-      statusCode: 404,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(text)
-      };
-      callback(null,response)
-    }
-    else {
-      var text=data.Body.toString().split('\n')
-      data=prepareSend(text)
-      var response = {
-      isBase64Encoded: false,
-      statusCode: 200,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-      };
-      callback(null,response);
-    }
-  });
+  if (event.type="comics"){
+    var params = {
+     Bucket: "vubz-marvel-cache",
+     Key: "comics/{0}-{1}.txt".format(event.FirstId,event.SecondId)
+    };
+    s3.getObject(params,function (err,data) {
+      if (err){
+        var response = {
+        isBase64Encoded: false,
+        statusCode: 404,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(text)
+        };
+        callback(null,response)
+      }
+      else {
+        var text=data.Body.toString().split('\n')
+        data=prepareSend(text)
+        var response = {
+        isBase64Encoded: false,
+        statusCode: 200,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+        };
+        callback(null,response);
+      }
+    });
+  }
+  else if (event.type = "series") {
+    var params = {
+     Bucket: "vubz-marvel-cache",
+     Key: "series/{0}-{1}.txt".format(event.FirstId,event.SecondId)
+    };
+    s3.getObject(params,function (err,data) {
+      if (err){
+        var response = {
+        isBase64Encoded: false,
+        statusCode: 404,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(text)
+        };
+        callback(null,response)
+      }
+      else {
+        var text=data.Body.toString().split('\n')
+        data=prepareSend(text)
+        var response = {
+        isBase64Encoded: false,
+        statusCode: 200,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+        };
+        callback(null,response);
+      }
+    });
+  }
+  else {
+
+  }
 
 };
 
