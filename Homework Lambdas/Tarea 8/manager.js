@@ -11,7 +11,7 @@ var apiKey_Private='';
 //var url='https://gateway.marvel.com:443/v1/public/characters?name=Spider-man&apikey=3fd140cb2420a52f345ea73e77f89e24'
 
 var uri = 'https://gateway.marvel.com/v1/public/characters/{0}/comics?format={1}&formatType={2}&noVariants={3}&orderBy={4}&apikey={5}&ts={6}&hash={7}&limit={8}';
-var uri2= 'https://gateway.marvel.com:443/v1/public/characters/{0}/series?limit={1}&offset={2}&apikey={3}';
+//var uri2= 'https://gateway.marvel.com:443/v1/public/characters/{0}/series?limit={1}&offset={2}&apikey={3}';
 
 var format = 'comic';
 var formatType = 'comic';
@@ -21,13 +21,15 @@ var apikey = apiKey_Public;
 var TS = new Date().getTime();
 var hash = crypto.createHash('md5').update(TS + apiKey_Private + apiKey_Public).digest('hex');
 var limit = 100;
-
+var comicCounter=0;
+var comicCounter2=0;
+var CharOneId="";
+var CharTwoId="";
 
 module.exports.get = (event, context, callback) => {
-  console.log("Test");
-  console.log(event.data);
-  console.log(event.FirstId);
-  console.log(event.SecondId);
+  CharOneId=event.FirstId;
+  CharTwoId=event.SecondId;
+
   var firstCharacterGetComicsUrl= uri.format(event.FirstId,format,formatType,noVariants,orderBy,apikey,TS,hash,limit);
   var secondCharacterGetComicsUrl= uri.format(event.SecondId,format,formatType,noVariants,orderBy,apikey,TS,hash,limit);
   //console.log(firstCharacterGetComicsUrl);
@@ -42,7 +44,20 @@ module.exports.get = (event, context, callback) => {
     } // an error occurred
     else     {
       if (data.statusCode==200){
+        ///////////////////////////
+        var TS2 = new Date().getTime();
+        var totalComics="2";
+        var params = {
+        FunctionName: 'vubz-dev-AddItemTableDynamoDB', /* required */
+        Payload: '{"FirstId": "'+event.FirstId+'","SecondId": "'+event.SecondId+'","StartTime": "'+TS.toString()+'","EndTime": "'+TS2.toString()+'","Id": "'+hash+'","SingleQuantity": "'+totalComics+'"}'
+        };
+
+        lambda.invoke(params, function(err, data) {
+          if (err) console.log(err, err.stack); // an error occurred
+        });
+        ///////////////////////////
         callback(null,data);
+
       }
       else {
         async.parallel([
@@ -71,8 +86,7 @@ module.exports.get = (event, context, callback) => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data)
           };
-          callback(null, response);
-
+          //////////////////////////////
           var params = {
           FunctionName: 'vubz-dev-SaveMarvelCache', /* required */
           Payload: '{"FirstId": "'+event.FirstId+'","SecondId": "'+event.SecondId+'","data": "'+tempdata+'","Type": "comics"}'
@@ -81,6 +95,19 @@ module.exports.get = (event, context, callback) => {
           lambda.invoke(params, function(err, data) {
             if (err) console.log(err, err.stack); // an error occurred
           });
+          /////////////////////////////
+          var TS2 = new Date().getTime();
+          var totalComics=(comicCounter+comicCounter2+2).toString()
+          var params = {
+          FunctionName: 'vubz-dev-AddItemTableDynamoDB', /* required */
+          Payload: '{"FirstId": "'+event.FirstId+'","SecondId": "'+event.SecondId+'","StartTime": "'+TS.toString()+'","EndTime": "'+TS2.toString()+'","Id": "'+hash+'","SingleQuantity": "'+totalComics+'"}'
+          };
+
+          lambda.invoke(params, function(err, data) {
+            if (err) console.log(err, err.stack); // an error occurred
+          });
+          /////////////////////////////
+          callback(null, response);
         });
       };
     };
@@ -101,6 +128,7 @@ var getCharacterComicsSimple = function (getUrl,callback) {
     res.on('end',(data)=>{
       var comics = JSON.parse(totalData);
       if(comics["data"]){
+        //console.log(comics);
         comicTotal=comics["data"]["total"];
 
       }
@@ -125,9 +153,10 @@ var prepareSend=function (data) {
 }
 var invokeMatch= function (CharacterLists) {
   var array1=[];
+  //console.log(CharacterLists);
   array1=CharacterLists[0];
   //console.log(array1);
-  var array2=CharacterLists[0];
+  var array2=CharacterLists[1];
 
   var sorted_a = array1.concat().sort();
   //console.log(sorted_a);
@@ -158,6 +187,12 @@ var invokeLamdas= function (characterid,comicCount,callback) {
   //console.log(comicCount);
   var tasks=[];
   var lamdaCount=Math.ceil(comicCount/100);
+  if (characterid==CharOneId) {
+    comicCounter=lamdaCount;
+  }
+  else {
+    comicCounter2=lamdaCount;
+  }
   //console.log(lamdaCount);
   let offset;
   for (let i=0;i<lamdaCount;i++){
@@ -197,6 +232,7 @@ var invokeLamdas= function (characterid,comicCount,callback) {
 
     };
     //console.log(comics);
+
     callback(null,comics)
   });
 };
