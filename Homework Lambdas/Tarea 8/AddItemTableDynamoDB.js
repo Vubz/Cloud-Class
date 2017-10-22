@@ -7,8 +7,8 @@ var http = require('https');
 var crypto = require('crypto');
 var async = require("async");
 
-var apiKey_Public='3fd140cb2420a52f345ea73e77f89e24';
-var apiKey_Private='3902c6b5ce286580ff0599c868ed0cc91d7956d6';
+var apiKey_Public='';
+var apiKey_Private='';
 var uri = 'https://gateway.marvel.com/v1/public/characters/{0}?apikey={1}&ts={2}&hash={3}';
 var apikey = apiKey_Public;
 var TS = new Date().getTime();
